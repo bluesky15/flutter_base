@@ -1,5 +1,5 @@
-name: flutter_base
-description: A new Flutter project.
+name: base
+description: Arch Base
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.1 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -29,28 +29,52 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  dio: ^4.0.4
+  built_value: ^8.1.3
   json_annotation: ^4.3.0
+  koin: ^0.14.2
+  koin_flutter: ^0.10.0
+  logging: ^1.0.2
+  intl: ^0.17.0
+  shared_preferences: ^2.0.9
+  flutter_svg: ^1.1.0
+  toggle_switch: ^2.0.1
+  flutter_bloc: ^8.0.1
+#  meta: ^1.1.8
+#  signature: ^5.0.0
+#  path_provider: ^2.0.9
+#  url_launcher: ^6.0.20
+#  image_picker: ^0.8.4+11
+#  android_intent_plus: ^3.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
-  freezed: ^0.15.0+1
-  freezed_annotation: ^0.15.0
-  build_runner: ^2.1.4
-  json_serializable: ^6.0.0
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.1
+  build_runner: ^2.1.5
+  json_serializable: ^6.0.1
+  freezed: ^2.0.3+1
+  freezed_annotation: ^2.0.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -60,6 +84,13 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+
+  assets:
+    - assets/icons/
+    - assets/icons/doos/
+    - assets/icons/spl/
+    - assets/icons/sols/
+    - assets/i18n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
