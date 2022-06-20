@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_base/helper.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,11 +31,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final containerKey = GlobalKey();
+  final contkey = GlobalKey();
+  final containerKey2 = GlobalKey();
+  var isVisible = true;
 
-  void _incrementCounter() {
+  changeState() {
     setState(() {
-      _counter++;
+      isVisible = false;
     });
   }
 
@@ -44,24 +49,56 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        child: VisibilityDetector(
+          key: contkey,
+          onVisibilityChanged: (visibilityInfo) {
+            var visiblePercentage = visibilityInfo.visibleFraction * 100;
+            debugPrint(
+                'Widget ${visibilityInfo.key} is ${visiblePercentage}% visible');
+          },
+          child: Container(
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                VisibilityDetector(
+                  key: GlobalKey(),
+                  onVisibilityChanged: (visibilityInfo){
+                    var visiblePercentage = visibilityInfo.visibleFraction * 100;
+                    debugPrint(
+                        'Widget ${visibilityInfo.key} is ${visiblePercentage}% visible');
+                  },
+                  child: InkWell(
+                      key: containerKey,
+                      child: Text("hello"),
+                      onTap: () {
+                        //printWidgetPosition(containerKey);
+                        changeState();
+                      }),
+                ),
+                if (isVisible)
+                  VisibilityDetector(
+                    key: GlobalKey(),
+                    onVisibilityChanged: (visibilityInfo){
+                      var visiblePercentage = visibilityInfo.visibleFraction * 100;
+                      debugPrint(
+                          'Widget ${visibilityInfo.key} is ${visiblePercentage}% visible');
+                    },
+                    child: InkWell(
+                        key: containerKey2,
+                        child: Text("hello world"),
+                        onTap: () {
+                          printWidgetPosition(containerKey2);
+                        }),
+                  )
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void printWidgetPosition(GlobalKey key) {
+    print('absolute coordinates on screen: ${key.globalPaintBounds}');
   }
 }
