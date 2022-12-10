@@ -1,0 +1,27 @@
+[
+  {
+    "itemName": "Phone",
+    "filterCategory": [
+      { "name": "color",
+        "values": [
+          {
+            "name": "#FFFFF"
+          }
+        ]
+      },
+      { "name": "brand",
+        "values": [
+          {
+            "name": "samsung"
+          }
+        ]
+      },
+      { "name": "price",
+        "values": [
+          {
+            "name": "10000-20000"
+          }
+        ]
+      }
+    ]}
+]
