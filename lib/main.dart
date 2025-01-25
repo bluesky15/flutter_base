@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_base/bloc/counter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => CounterProvider()),
-      ],
-      child: const MyApp(),
-    ),
+    const MyApp(),
   );
 }
 
@@ -19,24 +15,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: "Hello"),
-    );
-  }
-}
-
-class CounterProvider with ChangeNotifier {
-  int _count = 0;
-
-  int get count => _count;
-
-  void increment() {
-    _count++;
-    notifyListeners();
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          useMaterial3: true,
+          primarySwatch: Colors.blue,
+        ),
+        home: BlocProvider(
+          create: (_) => CounterBloc(),
+          child: const MyHomePage(title: 'Hello'),
+        ) //const MyHomePage(title: "Hello"),
+        );
   }
 }
 
@@ -54,22 +42,26 @@ class MyHomePage extends StatelessWidget {
           child: Text(title),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '${context.watch<CounterProvider>().count}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: BlocBuilder<CounterBloc, CounterState>(
+        builder: (context, state) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'You have pushed the button this many times:',
+              ),
+              Text(
+                '${state.counter}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ],
+          ),
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<CounterProvider>().increment(),
+        onPressed: () =>
+            BlocProvider.of<CounterBloc>(context).add(IncrementEvent()),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
